@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="quiz-container">
+
+        <div id="start-screen">
+            <h1>Cybersecurity Quiz</h1>
+            <p>Test your cybersecurity knowledge!</p>
+            <p>⏱️ You have <b>10 seconds</b> for each question.</p>
+            <button onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+
+            <div class="top-bar">
+                <span id="question-number">Question 1/10</span>
+                <span id="timer">10</span>
+            </div>
+
+            <div class="timer-bar">
+                <div id="timer-progress"></div>
+            </div>
+
+            <h2 id="question"></h2>
+
+            <div id="options"></div>
+
+            <button id="next-btn" onclick="nextQuestion()" disabled>
+                Next
+            </button>
+
+        </div>
+
+        <div id="result-screen" class="hidden">
+
+            <h1>Quiz Completed!</h1>
+
+            <h2 id="score"></h2>
+
+            <div class="result-box">
+                <p>✅ Answered: <span id="answered"></span></p>
+                <p>❌ Not Answered: <span id="not-answered"></span></p>
+                <p>⏳ Pending: <span id="pending"></span></p>
+            </div>
+
+            <button onclick="restartQuiz()">Restart Quiz</button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
