@@ -125,13 +125,16 @@ function startQuiz() {
     answeredCount = 0;
     notAnsweredCount = 0;
 
+    // Start anti-cheating mode
+    quizStarted = true;
+    tabSwitchDetected = false;
+
     document.getElementById("start-screen").classList.add("hidden");
     document.getElementById("result-screen").classList.add("hidden");
     document.getElementById("quiz-screen").classList.remove("hidden");
 
     showQuestion();
 }
-
 function showQuestion() {
 
     clearInterval(timer);
@@ -336,3 +339,67 @@ document.addEventListener("keydown", function (e) {
         e.preventDefault();
     }
 });
+
+// ===============================
+// TAB SWITCH DETECTION
+// ===============================
+
+let quizStarted = false;
+let tabSwitchDetected = false;
+
+document.addEventListener("visibilitychange", function () {
+
+    if (quizStarted && document.hidden && !tabSwitchDetected) {
+
+        tabSwitchDetected = true;
+
+        alert("⚠️ Tab switching is not allowed!");
+
+        endQuizDueToCheating();
+    }
+});
+
+
+// Detect leaving the browser window
+window.addEventListener("blur", function () {
+
+    if (quizStarted && !tabSwitchDetected) {
+
+        tabSwitchDetected = true;
+
+        alert("⚠️ Leaving the quiz window is not allowed!");
+
+        endQuizDueToCheating();
+    }
+});
+
+
+// ===============================
+// END QUIZ FOR CHEATING
+// ===============================
+
+function endQuizDueToCheating() {
+
+    quizStarted = false;
+
+    clearInterval(timer);
+
+    // Hide quiz screen
+    document.getElementById("quiz-screen").classList.add("hidden");
+
+    // Show result screen
+    document.getElementById("result-screen").classList.remove("hidden");
+
+    // Show cheating message
+    document.getElementById("score").textContent =
+        "Quiz Disqualified";
+
+    document.getElementById("answered").textContent =
+        answeredCount;
+
+    document.getElementById("not-answered").textContent =
+        notAnsweredCount;
+
+    document.getElementById("pending").textContent =
+        questions.length - currentQuestion;
+}
